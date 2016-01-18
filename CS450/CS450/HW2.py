@@ -133,8 +133,8 @@ predictions = classifier.predict(X_test)
 #print X_train, X_test, y_train, y_test
 #print predictions
 from sklearn.metrics import accuracy_score
-print accuracy_score(predictions, y_test)
-print accuracy_score(predictions1, y_test)
+print 'sklearn:',accuracy_score(predictions, y_test)
+print 'mine:',accuracy_score(predictions1, y_test)
 
 iris = datasets.load_iris() 
 assert iris.data.__len__() == iris.target.__len__()
@@ -146,5 +146,5 @@ predictions = classifier.predict(X_test)
 #print X_train, X_test, y_train, y_test
 #print predictions
 from sklearn.metrics import accuracy_score
-print accuracy_score(predictions, y_test)
-print accuracy_score(predictions1, y_test)
+print 'sklearn:', accuracy_score(predictions, y_test)
+print 'mine:', accuracy_score(predictions1, y_test)
