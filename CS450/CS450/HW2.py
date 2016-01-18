@@ -38,21 +38,21 @@ class DataSet():
          max_index = max(self.data_points)
          self.data_points[max_index + 1] = data_point1
 
-   def numpyArrayData():
+   def numpyArrayData(self):
       if not self.data_points:
          return []
       else:
          temp_array = []
-         for point in self.data_points:
+         for _,point in self.data_points.items():
             temp_array.append(point.data)
          return np.array(temp_array)
 
-   def numpyArrayTarget():
+   def numpyArrayTarget(self):
       if not self.data_points:
          return []
       else:
          temp_array = []
-         for point in self.data_points:
+         for _,point in self.data_points.items():
             temp_array.append(point.target)
          return np.array(temp_array)
 
@@ -65,27 +65,73 @@ for i in range(data_len):
    data_point = DataPoint(iris.data[i], iris.target[i])
    iris_data_points.addDataPoint(data_point)
 
-keys = random.sample(iris_data_points, data_len)
-training = keys[0:data_len*7/10]
-test = keys[data_len*7/10:data_len]
+read_file1 = open('./data/car.data', 'r+')
+write_file1 = open('./data/car.data2', 'w+')
+i = 0
+data = read_file1.read()
+data = data.replace("vhigh", '4')
+data = data.replace("low", '1')
+data = data.replace("high", '3')
+data = data.replace("med", '2')
+data = data.replace("big", '3')
+data = data.replace("small", '1')
+data = data.replace("5more", '5')
+data = data.replace("more", '6')
+data = data.replace("unacc", '1')
+data = data.replace("acc", '2')
+data = data.replace("vgood", '4')
+data = data.replace("good", '3')
+print data
+write_file1.write(data)
 
-num_right = 0
-num_total = test.__len__()
-for i in range(num_total):
-   if 0 == iris_data_points[test[i]].target:
-      num_right += 1
-
-print num_right/float(num_total)
 
 car_data_points = DataSet()
-car_data_points.loadData('./data/car.data')
+car_data_points.loadData('./data/car.data2')
+
 print car_data_points
 
-classifier = KNeighborsClassifier(n_neighbors=3)
 data1 = car_data_points.numpyArrayData()
 target1 = car_data_points.numpyArrayTarget()
-X_train, X_test, y_train, y_test = train_test_split(data1, target1, test_size=0.30, random_state=42)
+
+
+from scipy import stats
+def knnClassifier(training_data, test_data, training_target, test_target, k=5):
+   #normalize the data
+   #calculate the z-score of the data
+   print training_data
+   training_data = training_data
+   new_training_data = stats.zscore(training_data.astype(int), axis=0)
+   new_test_data = stats.zscore(test_data.astype(int), axis=0)
+   #find the k nearest neighbors for each test data
+   #print 'test', new_test_data
+   predictions = []
+   for test in new_test_data:
+      #print test
+      # find the euclidean distance between the test case and all training cases
+      distances = []
+      neighbors = []
+      neighbor_predictions = []
+      for train in new_training_data:
+         #print train
+         distances.append(np.linalg.norm(train-test))
+      #print distances
+      for i in range(k):
+         neighb_i = distances.index(min(distances))
+         neighbors.append(neighb_i)
+         distances[neighb_i] = 1000000
+      #print neighbors
+      for neighb in neighbors:
+         neighbor_predictions.append(training_target[neighb])
+      predictions.append(stats.mode(neighbor_predictions)[0][0])
+   return predictions
+   
+X_train, X_test, y_train, y_test = train_test_split(data1, target1, test_size=0.30, random_state=2)
+predictions1 = knnClassifier(X_train, X_test, y_train, y_test)
+classifier = KNeighborsClassifier(n_neighbors=5)
 classifier.fit(X_train, y_train)
 predictions = classifier.predict(X_test)
-print X_train, X_test, y_train, y_test
-print predictions
+#print X_train, X_test, y_train, y_test
+#print predictions
+from sklearn.metrics import accuracy_score
+print accuracy_score(predictions, y_test)
+print accuracy_score(predictions1, y_test)
