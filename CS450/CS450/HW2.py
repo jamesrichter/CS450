@@ -81,14 +81,14 @@ data = data.replace("unacc", '1')
 data = data.replace("acc", '2')
 data = data.replace("vgood", '4')
 data = data.replace("good", '3')
-print data
+#print data
 write_file1.write(data)
 
 
 car_data_points = DataSet()
 car_data_points.loadData('./data/car.data2')
 
-print car_data_points
+#print car_data_points
 
 data1 = car_data_points.numpyArrayData()
 target1 = car_data_points.numpyArrayTarget()
@@ -98,7 +98,7 @@ from scipy import stats
 def knnClassifier(training_data, test_data, training_target, test_target, k=5):
    #normalize the data
    #calculate the z-score of the data
-   print training_data
+   #print training_data
    training_data = training_data
    new_training_data = stats.zscore(training_data.astype(int), axis=0)
    new_test_data = stats.zscore(test_data.astype(int), axis=0)
@@ -126,7 +126,20 @@ def knnClassifier(training_data, test_data, training_target, test_target, k=5):
    return predictions
    
 X_train, X_test, y_train, y_test = train_test_split(data1, target1, test_size=0.30, random_state=2)
-predictions1 = knnClassifier(X_train, X_test, y_train, y_test)
+predictions1 = knnClassifier(X_train, X_test, y_train, y_test, k=5)
+classifier = KNeighborsClassifier(n_neighbors=5)
+classifier.fit(X_train, y_train)
+predictions = classifier.predict(X_test)
+#print X_train, X_test, y_train, y_test
+#print predictions
+from sklearn.metrics import accuracy_score
+print accuracy_score(predictions, y_test)
+print accuracy_score(predictions1, y_test)
+
+iris = datasets.load_iris() 
+assert iris.data.__len__() == iris.target.__len__()
+X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.30, random_state=2)
+predictions1 = knnClassifier(X_train, X_test, y_train, y_test, k=5)
 classifier = KNeighborsClassifier(n_neighbors=5)
 classifier.fit(X_train, y_train)
 predictions = classifier.predict(X_test)
