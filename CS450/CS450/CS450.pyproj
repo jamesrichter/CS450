@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>f9b17ff6-832f-449b-b6ed-cd42fcd1d901</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>HW2.py</StartupFile>
+    <StartupFile>HW3.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,9 +24,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CS450.py" />
     <Compile Include="HW1.py" />
     <Compile Include="HW2.py" />
+    <Compile Include="HW3.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="module1.py" />
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +36,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\car.data" />
+    <Content Include="data\crx.data" />
+    <Content Include="data\house-votes-84.data" />
+    <Content Include="data\krkopt.data" />
+    <Content Include="data\lenses.data" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\2.7" />
