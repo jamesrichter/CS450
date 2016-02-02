@@ -37,6 +37,7 @@
   <ItemGroup>
     <Content Include="data\car.data" />
     <Content Include="data\crx.data" />
+    <Content Include="data\decision_trees.txt" />
     <Content Include="data\house-votes-84.data" />
     <Content Include="data\krkopt.data" />
     <Content Include="data\lenses.data" />
