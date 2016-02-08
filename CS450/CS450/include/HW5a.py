@@ -60,14 +60,15 @@ class Network:
             if layer == 0:
                i = 0
                for weight in neuron.incoming_weight:
-                  neuron.value += sigmoid(weight * self.input_layer[i].value)
+                  neuron.value += weight * self.input_layer[i].value
                   i += 1
+               neuron.value = sigmoid(neuron.value)
             else:
                i = 0
                for weight in neuron.incoming_weight:
-                  neuron.value += sigmoid(weight * self.hidden_layers[layer - 1][i].value)
-
+                  neuron.value += weight * self.hidden_layers[layer - 1][i].value
                   i += 1
+               neuron.value = sigmoid(neuron.value)
          x[-1].value = 1
          layer += 1
       print "done :)"
