@@ -146,6 +146,7 @@ def accuracyClf(clf_target, test_target):
       
 
 # IRIS classifier
+print "Iris:"
 iris = load_iris()
 
 train_data, test_data, train_target, test_target = train_test_split(iris.data, iris.target, test_size=0.30, random_state=2)
@@ -157,6 +158,7 @@ homemadeDecisionTree(train_data, train_target, test_data, test_target)
 
 
 # HOUSE VOTES classifier
+print "House Votes:"
 array = np.loadtxt('./data/house-votes-84.data', dtype = "U", delimiter=',')
 
 array[array == "y"] = "1"
@@ -175,7 +177,7 @@ homemadeDecisionTree(train_data, train_target, test_data, test_target)
 
 
 # CHESS MOVES classifier
-
+print "Chess moves:"
 array = np.loadtxt('./data/krkopt.data', dtype = "U", delimiter = ',')
 
 array[array == 'a'] = '1'
@@ -199,7 +201,7 @@ homemadeDecisionTree(train_data, train_target, test_data, test_target)
 
 
 # CREDIT CARD classifier
-
+print "Credit card:"
 array = np.loadtxt('./data/crx.data', dtype = "U", delimiter = ',')
 
 array[array == 'a'] = '1'
@@ -246,7 +248,7 @@ homemadeDecisionTree(train_data, train_target, test_data, test_target)
 
 
 # LENSES classifier
-
+print "Lenses:"
 array = np.loadtxt('./data/lenses.data', dtype = "U")
 house_data = array[:,0:-1]
 house_target = array[:,-1]
